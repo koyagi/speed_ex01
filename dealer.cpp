@@ -11,11 +11,11 @@ int main() {
 
     auto [pile_red, pile_black] = create_akakuro_decks();
 
-    for(const auto el : pile_red ) {
+    for(const auto & el : pile_red ) {
         std::cout << el << ", "s;
     }
     std::cout << std::endl;
-    for(const auto el : pile_black ) {
+    for(const auto & el : pile_black ) {
         std::cout << el << ", "s;
     }
     std::cout << std::endl;

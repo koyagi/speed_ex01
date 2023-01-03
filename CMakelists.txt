@@ -1,2 +1,4 @@
 add_executable(hello dealer.cpp)
 target_compile_features(hello PRIVATE cxx_std_17)
+set_target_properties(hello PROPERTIES CXX_EXTENTIONS OFF)
+target_compile_options(hello PRIVATE -Wall -Werror -pedantic-errors -Weffc++)
