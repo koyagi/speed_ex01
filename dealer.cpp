@@ -4,13 +4,9 @@
 #include <vector>
 #include <cstdlib>
 
-
-
-int main() {
+namespace {
     using namespace std::string_literals;
-    std::cout << "howdy!"s << std::endl;
-
-    auto [deck_red, deck_black] = []() {
+    auto create_akakuro_decks() {
         auto deck_red = std::vector<std::string>{};
         auto deck_black = std::vector<std::string>{};
         deck_red.reserve(26);
@@ -25,12 +21,22 @@ int main() {
             deck_black.push_back(suits_black.at(i / 13) + rank.at(i % 13));
         }
         return std::make_tuple(deck_red, deck_black);
-    }();
-    for(const auto el : deck_red ) {
+    }
+}
+
+
+
+int main() {
+    using namespace std::string_literals;
+    std::cout << "howdy!"s << std::endl;
+
+    auto [pile_red, pile_black] = create_akakuro_decks();
+
+    for(const auto el : pile_red ) {
         std::cout << el << ", ";
     }
     std::cout << std::endl;
-    for(const auto el : deck_black ) {
+    for(const auto el : pile_black ) {
         std::cout << el << ", ";
     }
     std::cout << std::endl;
