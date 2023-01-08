@@ -1,11 +1,18 @@
-
-
+#include <algorithm>
+#include <random>
 #include <string>
 #include <tuple>
 #include <vector>
 
 namespace {
     using namespace std::string_literals;
+
+    void cardShuffle(std::vector<std::string> & deck) {
+        std::random_device seed;
+        std::mt19937_64 randomEngine(seed());
+        std::shuffle(std::begin(deck), std::end(deck), randomEngine);
+    }
+
     auto create_akakuro_decks() {
         auto deck_red = std::vector<std::string>{};
         auto deck_black = std::vector<std::string>{};
@@ -20,6 +27,8 @@ namespace {
         for(int i = 0; i < 26; i++) {
             deck_black.push_back(suits_black.at(i / 13) + rank.at(i % 13));
         }
+        cardShuffle(deck_red);
+        cardShuffle(deck_black);
         return std::make_tuple(deck_red, deck_black);
     }
 }
