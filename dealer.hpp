@@ -14,7 +14,9 @@ namespace {
         auto deck = strVec{};
         deck.reserve( suits.size() * rank.size() );
         for(const auto & aSuit : suits) {
-            std::transform(std::cbegin(rank), std::cend(rank), std::back_inserter(deck), [suit = aSuit](std::string aRank){return suit + aRank;});
+            std::transform(std::cbegin(rank), std::cend(rank), std::back_inserter(deck),
+                [suit = aSuit](std::string aRank){return suit + aRank;}
+            );
         }
         return deck;
     }
