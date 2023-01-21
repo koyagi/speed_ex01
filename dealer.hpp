@@ -4,6 +4,8 @@
 #include <tuple>
 #include <vector>
 
+#include <nlohmann/json.hpp>
+
 namespace {
     using namespace std::string_literals;
     using strVec = std::vector<std::string>;
@@ -34,4 +36,32 @@ namespace {
         cardShuffle(deck_black);
         return std::make_tuple(deck_red, deck_black);
     }
+    class GameTable {
+    public:
+        GameTable() {
+            std::tie(redStock, blackStock) = create_akakuro_decks();
+        }
+
+        auto getPrivate() {
+            return std::make_tuple(redStock, blackStock);
+        }
+        
+        auto getDebugInfo() -> std::string {
+            using json = nlohmann::json;
+            json j;
+
+            j["redStock"] = redStock;
+            j["blackStock"] = blackStock;
+
+            return j.dump();
+        }
+
+    private:
+        strVec redStock{};
+        strVec blackStock{};
+        strVec redOpen{};
+        strVec blackOpen{};
+        strVec redSidePile{};
+        strVec blackSidePile{};
+    };
 }
