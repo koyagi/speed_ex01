@@ -74,4 +74,8 @@ TEST_F(CreateDecksFixture, getDebugInfo) {
     auto stock_set_black = std::set(std::begin(stock_black), std::end(stock_black));
     EXPECT_EQ(stock_set_black, expected_set_black);
 
+    EXPECT_EQ(j["redUpcard"].size(), 0);
+    EXPECT_EQ(j["blackUpcard"].size(), 0);
+    EXPECT_EQ(j["redSidePile"].size(), 0);
+    EXPECT_EQ(j["blackSidePile"].size(), 0);
 }

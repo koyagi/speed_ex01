@@ -52,6 +52,10 @@ namespace {
 
             j["redStock"] = redStock;
             j["blackStock"] = blackStock;
+            j["redUpcard"] = redUpcard;
+            j["blackUpcard"] = blackUpcard;
+            j["redSidePile"] = redSidePile;
+            j["blackSidePile"] = blackSidePile;
 
             return j.dump();
         }
@@ -59,8 +63,8 @@ namespace {
     private:
         strVec redStock{};
         strVec blackStock{};
-        strVec redOpen{};
-        strVec blackOpen{};
+        strVec redUpcard{};
+        strVec blackUpcard{};
         strVec redSidePile{};
         strVec blackSidePile{};
     };
