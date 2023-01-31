@@ -1,5 +1,5 @@
-#include "gtest/gtest.h"
 #include "../dealer.hpp"
+#include "gtest/gtest.h"
 
 #include <set>
 #include <string>
@@ -66,16 +66,16 @@ TEST_F(CreateDecksFixture, getDebugInfo) {
     auto table = GameTable{};
     auto j = json::parse( table.getDebugInfo() );
 
-    auto stock_red = j["redStock"];
+    auto stock_red = j.at("redStock");
     auto stock_set_red = createDataSetAs<std::set<std::string>>(stock_red);
     EXPECT_EQ(stock_set_red, expected_set_red);
 
-    auto stock_black = j["blackStock"];
+    auto stock_black = j.at("blackStock");
     auto stock_set_black = createDataSetAs<std::set<std::string>>(stock_black);
     EXPECT_EQ(stock_set_black, expected_set_black);
 
-    EXPECT_EQ(j["redUpcard"].size(), 0);
-    EXPECT_EQ(j["blackUpcard"].size(), 0);
-    EXPECT_EQ(j["redSidePile"].size(), 0);
-    EXPECT_EQ(j["blackSidePile"].size(), 0);
+    EXPECT_EQ(j.at("redUpcard").size(), 0);
+    EXPECT_EQ(j.at("blackUpcard").size(), 0);
+    EXPECT_EQ(j.at("redSidePile").size(), 0);
+    EXPECT_EQ(j.at("blackSidePile").size(), 0);
 }
