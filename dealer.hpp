@@ -11,7 +11,7 @@ namespace {
     using strVec = std::vector<std::string>;
 
     template <typename T, typename S>
-    auto createDataSetAs(const S & src) -> T {
+    auto recreateDataSetAs(const S & src) -> T {
         return T(std::cbegin(src), std::cend(src));
     }
 
@@ -50,12 +50,12 @@ namespace {
             using json = nlohmann::json;
             auto j = json::parse(debug_init);
 
-            redStock = createDataSetAs<strVec>(j.at("redStock"));
-            blackStock = createDataSetAs<strVec>(j.at("blackStock"));
-            redUpcard = createDataSetAs<strVec>(j.at("redUpcard"));
-            blackUpcard = createDataSetAs<strVec>(j.at("blackUpcard"));
-            redSidePile = createDataSetAs<strVec>(j.at("redSidePile"));
-            blackSidePile = createDataSetAs<strVec>(j.at("blackSidePile"));
+            redStock = recreateDataSetAs<strVec>(j.at("redStock"));
+            blackStock = recreateDataSetAs<strVec>(j.at("blackStock"));
+            redUpcard = recreateDataSetAs<strVec>(j.at("redUpcard"));
+            blackUpcard = recreateDataSetAs<strVec>(j.at("blackUpcard"));
+            redSidePile = recreateDataSetAs<strVec>(j.at("redSidePile"));
+            blackSidePile = recreateDataSetAs<strVec>(j.at("blackSidePile"));
         }
 
         auto getPrivate() {
