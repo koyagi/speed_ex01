@@ -10,8 +10,12 @@ namespace {
     using namespace std::string_literals;
     using strVec = std::vector<std::string>;
 
-    template<typename T = const strVec>
-    auto create_half_deck( T && suits) {    // Here, argument suits should be const universal-refarence.
+    template <typename T, typename S>
+    auto createDataSetAs(const S & src) -> T {
+        return T(std::cbegin(src), std::cend(src));
+    }
+
+    auto create_half_deck(const strVec & suits) {    // Here, "const &" is better than universal-refarence.
         const auto rank = strVec{"A"s, "2"s, "3"s, "4"s, "5"s, "6"s, "7"s, "8"s, "9"s, "10"s, "J"s, "Q"s, "K"s};
         auto deck = strVec{};
         deck.reserve( suits.size() * rank.size() );
@@ -46,19 +50,12 @@ namespace {
             using json = nlohmann::json;
             auto j = json::parse(debug_init);
 
-            auto tmp_redStock = j.at("redStock");
-            auto tmp_blackStock = j.at("blackStock");
-            auto tmp_redUpcard = j.at("redUpcard");
-            auto tmp_blackUpcard = j.at("blackUpcard");
-            auto tmp_redSidePile = j.at("redSidePile");
-            auto tmp_blackSidePile = j.at("blackSidePile");
-
-            redStock = strVec(std::begin(tmp_redStock),std::end(tmp_redStock));
-            blackStock = strVec(std::begin(tmp_blackStock),std::end(tmp_blackStock));
-            redUpcard = strVec(std::begin(tmp_redUpcard),std::end(tmp_redUpcard));
-            blackUpcard = strVec(std::begin(tmp_blackUpcard),std::end(tmp_blackUpcard));
-            redSidePile = strVec(std::begin(tmp_redSidePile),std::end(tmp_redSidePile));
-            blackSidePile = strVec(std::begin(tmp_blackSidePile),std::end(tmp_blackSidePile));
+            redStock = createDataSetAs<strVec>(j.at("redStock"));
+            blackStock = createDataSetAs<strVec>(j.at("blackStock"));
+            redUpcard = createDataSetAs<strVec>(j.at("redUpcard"));
+            blackUpcard = createDataSetAs<strVec>(j.at("blackUpcard"));
+            redSidePile = createDataSetAs<strVec>(j.at("redSidePile"));
+            blackSidePile = createDataSetAs<strVec>(j.at("blackSidePile"));
         }
 
         auto getPrivate() {
