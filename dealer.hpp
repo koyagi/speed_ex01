@@ -42,13 +42,32 @@ namespace {
             std::tie(redStock, blackStock) = create_akakuro_decks();
         }
 
+        GameTable(std::string debug_init) {
+            using json = nlohmann::json;
+            auto j = json::parse(debug_init);
+
+            auto tmp_redStock = j.at("redStock");
+            auto tmp_blackStock = j.at("blackStock");
+            auto tmp_redUpcard = j.at("redUpcard");
+            auto tmp_blackUpcard = j.at("blackUpcard");
+            auto tmp_redSidePile = j.at("redSidePile");
+            auto tmp_blackSidePile = j.at("blackSidePile");
+
+            redStock = strVec(std::begin(tmp_redStock),std::end(tmp_redStock));
+            blackStock = strVec(std::begin(tmp_blackStock),std::end(tmp_blackStock));
+            redUpcard = strVec(std::begin(tmp_redUpcard),std::end(tmp_redUpcard));
+            blackUpcard = strVec(std::begin(tmp_blackUpcard),std::end(tmp_blackUpcard));
+            redSidePile = strVec(std::begin(tmp_redSidePile),std::end(tmp_redSidePile));
+            blackSidePile = strVec(std::begin(tmp_blackSidePile),std::end(tmp_blackSidePile));
+        }
+
         auto getPrivate() {
             return std::make_tuple(redStock, blackStock);
         }
         
         auto getDebugInfo() -> std::string {
             using json = nlohmann::json;
-            json j;
+            json j{};
 
             j["redStock"] = redStock;
             j["blackStock"] = blackStock;
