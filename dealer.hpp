@@ -40,6 +40,8 @@ namespace {
         cardShuffle(deck_black);
         return std::make_tuple(deck_red, deck_black);
     }
+
+
     class GameTable {
     public:
         GameTable() {
