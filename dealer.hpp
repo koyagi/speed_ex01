@@ -1,10 +1,13 @@
 #include <algorithm>
 #include <random>
+#include <stack>
 #include <string>
 #include <tuple>
 #include <vector>
 
 #include <nlohmann/json.hpp>
+
+#include "mysafestack.hpp"
 
 namespace {
     using namespace std::string_literals;
@@ -40,7 +43,6 @@ namespace {
         cardShuffle(deck_black);
         return std::make_tuple(deck_red, deck_black);
     }
-
 
     class GameTable {
     public:

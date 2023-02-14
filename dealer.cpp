@@ -19,6 +19,8 @@ int main() {
         std::cout << el << ", "s;
     }
     std::cout << std::endl;
+    auto tmp = MySafeStack(std::vector{1,2,3});
+    std::cout << "pop() result: " << tmp.safePop() << std::endl;
     std::cout << "bye!"s << std::endl;
     return EXIT_SUCCESS;
 }
