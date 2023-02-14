@@ -1,3 +1,4 @@
+// #include "mysafestack.hpp"
 #include "dealer.hpp"
 
 #include <iostream>
@@ -21,6 +22,13 @@ int main() {
     std::cout << std::endl;
     auto tmp = MySafeStack(std::vector{1,2,3});
     std::cout << "pop() result: " << tmp.safePop() << std::endl;
+
+    auto tmp2 = std::vector(std::begin(tmp), std::end(tmp));
+    for( auto el : tmp2) {
+        std::cout << el << ", "s;
+    }
+    std::cout << std::endl;
+
     std::cout << "bye!"s << std::endl;
     return EXIT_SUCCESS;
 }

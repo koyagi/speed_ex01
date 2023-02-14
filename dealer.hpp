@@ -12,10 +12,13 @@
 namespace {
     using namespace std::string_literals;
     using strVec = std::vector<std::string>;
+    using strStack = MySafeStack<std::string, strVec>;
 
     template <typename T, typename S>
     auto recreateDataSetAs(const S & src) -> T {
-        return T(std::cbegin(src), std::cend(src));
+        // return T(std::cbegin(src), std::cend(src));
+        return T(std::begin(src), std::end(src));
+        // return T(src.cbegin(), src.cend());
     }
 
     auto create_half_deck(const strVec & suits) {    // Here, "const &" is better than universal-refarence.
@@ -41,7 +44,7 @@ namespace {
         auto deck_black = create_half_deck({ "S"s, "C"s });
         cardShuffle(deck_red);
         cardShuffle(deck_black);
-        return std::make_tuple(deck_red, deck_black);
+        return std::make_tuple(MySafeStack(deck_red), MySafeStack(deck_black));
     }
 
     class GameTable {
@@ -54,8 +57,8 @@ namespace {
             using json = nlohmann::json;
             auto j = json::parse(debug_init);
 
-            redStock = recreateDataSetAs<strVec>(j.at("redStock"));
-            blackStock = recreateDataSetAs<strVec>(j.at("blackStock"));
+            redStock = MySafeStack(recreateDataSetAs<strVec>(j.at("redStock")));
+            blackStock = MySafeStack(recreateDataSetAs<strVec>(j.at("blackStock")));
             redUpcard = recreateDataSetAs<strVec>(j.at("redUpcard"));
             blackUpcard = recreateDataSetAs<strVec>(j.at("blackUpcard"));
             redSidePile = recreateDataSetAs<strVec>(j.at("redSidePile"));
@@ -70,8 +73,8 @@ namespace {
             using json = nlohmann::json;
             json j{};
 
-            j["redStock"] = redStock;
-            j["blackStock"] = blackStock;
+            j["redStock"] = redStock.getUnderlyingContainer();
+            j["blackStock"] = blackStock.getUnderlyingContainer();
             j["redUpcard"] = redUpcard;
             j["blackUpcard"] = blackUpcard;
             j["redSidePile"] = redSidePile;
@@ -81,8 +84,8 @@ namespace {
         }
 
     private:
-        strVec redStock{};
-        strVec blackStock{};
+        strStack redStock{};
+        strStack blackStock{};
         strVec redUpcard{};
         strVec blackUpcard{};
         strVec redSidePile{};
