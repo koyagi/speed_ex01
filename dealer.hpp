@@ -13,7 +13,7 @@
 namespace {
     using namespace std::string_literals;
     using strVec = std::vector<std::string>;
-    using strStack = MySafeStack<std::string, strVec>;
+    using strStack = MySafeStack<strVec::value_type, strVec>;
     using strSet = std::set<std::string>;
 
     template <typename T, typename S>
