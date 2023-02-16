@@ -12,6 +12,10 @@ namespace {
         // inherit all original constructors.
         using std::stack<T, Container>::stack;
 
+        // Constructor with iterators, this will appear in c++23, but not c++17
+        template<typename Iter>
+        MySafeStack(Iter firstIter, Iter lastIter) : std::stack<T, Container>(Container(firstIter, lastIter)) {}
+
         // top() and pop() are not safe when stack is empty. They cause Undefined Behavior.
         // So, I defined safePop() and delete original top() and pop().
         void pop() = delete;
@@ -26,7 +30,7 @@ namespace {
         }
 
         // add to access underlying container and it's iterator.
-        auto getUnderlyingContainer() -> const Container {
+        auto getUnderlyingContainer() -> Container {
             return this->c;
         }
         auto begin() {

@@ -1,5 +1,6 @@
 #include <algorithm>
 #include <random>
+#include <set>
 #include <stack>
 #include <string>
 #include <tuple>
@@ -13,12 +14,13 @@ namespace {
     using namespace std::string_literals;
     using strVec = std::vector<std::string>;
     using strStack = MySafeStack<std::string, strVec>;
+    using strSet = std::set<std::string>;
 
     template <typename T, typename S>
     auto recreateDataSetAs(const S & src) -> T {
-        // return T(std::cbegin(src), std::cend(src));
-        return T(std::begin(src), std::end(src));
-        // return T(src.cbegin(), src.cend());
+        using std::begin;
+        using std::end;
+        return T(begin(src), end(src));
     }
 
     auto create_half_deck(const strVec & suits) {    // Here, "const &" is better than universal-refarence.
@@ -57,10 +59,10 @@ namespace {
             using json = nlohmann::json;
             auto j = json::parse(debug_init);
 
-            redStock = MySafeStack(recreateDataSetAs<strVec>(j.at("redStock")));
-            blackStock = MySafeStack(recreateDataSetAs<strVec>(j.at("blackStock")));
-            redUpcard = recreateDataSetAs<strVec>(j.at("redUpcard"));
-            blackUpcard = recreateDataSetAs<strVec>(j.at("blackUpcard"));
+            redStock = recreateDataSetAs<strStack>(j.at("redStock"));
+            blackStock = recreateDataSetAs<strStack>(j.at("blackStock"));
+            redUpcard = recreateDataSetAs<strSet>(j.at("redUpcard"));
+            blackUpcard = recreateDataSetAs<strSet>(j.at("blackUpcard"));
             redSidePile = recreateDataSetAs<strVec>(j.at("redSidePile"));
             blackSidePile = recreateDataSetAs<strVec>(j.at("blackSidePile"));
         }
@@ -86,8 +88,8 @@ namespace {
     private:
         strStack redStock{};
         strStack blackStock{};
-        strVec redUpcard{};
-        strVec blackUpcard{};
+        strSet redUpcard{};
+        strSet blackUpcard{};
         strVec redSidePile{};
         strVec blackSidePile{};
     };
