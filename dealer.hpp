@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <unordered_map>
 #include <random>
 #include <set>
 #include <stack>
@@ -51,16 +52,20 @@ namespace {
 
     class GameTable {
     public:
+        enum class Player {
+            RED,
+            BLACK
+        };
         GameTable() {
-            std::tie(redStock, blackStock) = create_akakuro_decks();
+            std::tie(stock.at(GameTable::Player::RED), stock.at(GameTable::Player::BLACK)) = create_akakuro_decks();
         }
 
         GameTable(std::string debug_init) {
             using json = nlohmann::json;
             auto j = json::parse(debug_init);
 
-            redStock = recreateDataSetAs<strStack>(j.at("redStock"));
-            blackStock = recreateDataSetAs<strStack>(j.at("blackStock"));
+            stock.at(GameTable::Player::RED) = recreateDataSetAs<strStack>(j.at("redStock"));
+            stock.at(GameTable::Player::BLACK) = recreateDataSetAs<strStack>(j.at("blackStock"));
             redUpcard = recreateDataSetAs<strSet>(j.at("redUpcard"));
             blackUpcard = recreateDataSetAs<strSet>(j.at("blackUpcard"));
             redSidePile = recreateDataSetAs<strVec>(j.at("redSidePile"));
@@ -68,15 +73,15 @@ namespace {
         }
 
         auto getPrivate() {
-            return std::make_tuple(redStock, blackStock);
+            return std::make_tuple(stock.at(GameTable::Player::RED), stock.at(GameTable::Player::BLACK));
         }
         
         auto getDebugInfo() -> std::string {
             using json = nlohmann::json;
             json j{};
 
-            j["redStock"] = redStock.getUnderlyingContainer();
-            j["blackStock"] = blackStock.getUnderlyingContainer();
+            j["redStock"] = stock.at(GameTable::Player::RED).getUnderlyingContainer();
+            j["blackStock"] = stock.at(GameTable::Player::BLACK).getUnderlyingContainer();
             j["redUpcard"] = redUpcard;
             j["blackUpcard"] = blackUpcard;
             j["redSidePile"] = redSidePile;
@@ -85,9 +90,15 @@ namespace {
             return j.dump();
         }
 
+    // void turnup( GameTable::Player pl) {
+
+    // }
+
     private:
-        strStack redStock{};
-        strStack blackStock{};
+        std::unordered_map<GameTable::Player, strStack> stock = {
+            {GameTable::Player::RED, strStack{}},
+            {GameTable::Player::BLACK, strStack{}}
+        };
         strSet redUpcard{};
         strSet blackUpcard{};
         strVec redSidePile{};
