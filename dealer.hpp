@@ -57,15 +57,15 @@ namespace {
             BLACK
         };
         GameTable() {
-            std::tie(stock.at(GameTable::Player::RED), stock.at(GameTable::Player::BLACK)) = create_akakuro_decks();
+            std::tie(stock[GameTable::Player::RED], stock[GameTable::Player::BLACK]) = create_akakuro_decks();
         }
 
         GameTable(std::string debug_init) {
             using json = nlohmann::json;
             auto j = json::parse(debug_init);
 
-            stock.at(GameTable::Player::RED) = recreateDataSetAs<strStack>(j.at("redStock"));
-            stock.at(GameTable::Player::BLACK) = recreateDataSetAs<strStack>(j.at("blackStock"));
+            stock[GameTable::Player::RED] = recreateDataSetAs<strStack>(j.at("redStock"));
+            stock[GameTable::Player::BLACK] = recreateDataSetAs<strStack>(j.at("blackStock"));
             redUpcard = recreateDataSetAs<strSet>(j.at("redUpcard"));
             blackUpcard = recreateDataSetAs<strSet>(j.at("blackUpcard"));
             redSidePile = recreateDataSetAs<strVec>(j.at("redSidePile"));
@@ -95,10 +95,7 @@ namespace {
     // }
 
     private:
-        std::unordered_map<GameTable::Player, strStack> stock = {
-            {GameTable::Player::RED, strStack{}},
-            {GameTable::Player::BLACK, strStack{}}
-        };
+        std::unordered_map<GameTable::Player, strStack> stock;
         strSet redUpcard{};
         strSet blackUpcard{};
         strVec redSidePile{};
