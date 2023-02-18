@@ -56,6 +56,7 @@ namespace {
             RED,
             BLACK
         };
+
         GameTable() {
             std::tie(stock[GameTable::Player::RED], stock[GameTable::Player::BLACK]) = create_akakuro_decks();
         }
@@ -66,10 +67,10 @@ namespace {
 
             stock[GameTable::Player::RED] = recreateDataSetAs<strStack>(j.at("redStock"));
             stock[GameTable::Player::BLACK] = recreateDataSetAs<strStack>(j.at("blackStock"));
-            redUpcard = recreateDataSetAs<strSet>(j.at("redUpcard"));
-            blackUpcard = recreateDataSetAs<strSet>(j.at("blackUpcard"));
-            redSidePile = recreateDataSetAs<strVec>(j.at("redSidePile"));
-            blackSidePile = recreateDataSetAs<strVec>(j.at("blackSidePile"));
+            upcard[GameTable::Player::RED] = recreateDataSetAs<strSet>(j.at("redUpcard"));
+            upcard[GameTable::Player::BLACK] = recreateDataSetAs<strSet>(j.at("blackUpcard"));
+            pile[GameTable::Player::RED] = recreateDataSetAs<strStack>(j.at("redSidePile"));
+            pile[GameTable::Player::BLACK] = recreateDataSetAs<strStack>(j.at("blackSidePile"));
         }
 
         auto getPrivate() {
@@ -82,10 +83,10 @@ namespace {
 
             j["redStock"] = stock.at(GameTable::Player::RED).getUnderlyingContainer();
             j["blackStock"] = stock.at(GameTable::Player::BLACK).getUnderlyingContainer();
-            j["redUpcard"] = redUpcard;
-            j["blackUpcard"] = blackUpcard;
-            j["redSidePile"] = redSidePile;
-            j["blackSidePile"] = blackSidePile;
+            j["redUpcard"] = upcard.at(GameTable::Player::RED);
+            j["blackUpcard"] = upcard.at(GameTable::Player::BLACK);
+            j["redSidePile"] = pile.at(GameTable::Player::RED).getUnderlyingContainer();
+            j["blackSidePile"] = pile.at(GameTable::Player::BLACK).getUnderlyingContainer();
 
             return j.dump();
         }
@@ -96,9 +97,7 @@ namespace {
 
     private:
         std::unordered_map<GameTable::Player, strStack> stock;
-        strSet redUpcard{};
-        strSet blackUpcard{};
-        strVec redSidePile{};
-        strVec blackSidePile{};
+        std::unordered_map<GameTable::Player, strSet> upcard;
+        std::unordered_map<GameTable::Player, strStack> pile;
     };
 }
