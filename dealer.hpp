@@ -59,6 +59,14 @@ namespace {
 
         GameTable() {
             std::tie(stock[GameTable::Player::RED], stock[GameTable::Player::BLACK]) = create_akakuro_decks();
+            upcard = {
+                {GameTable::Player::RED, strSet{}},
+                {GameTable::Player::BLACK, strSet{}}
+            };
+            pile = {
+                {GameTable::Player::RED, strStack{}},
+                {GameTable::Player::BLACK, strStack{}}
+            };
         }
 
         GameTable(std::string debug_init) {
@@ -91,13 +99,15 @@ namespace {
             return j.dump();
         }
 
-    // void turnup( GameTable::Player pl) {
-
-    // }
+    void turnup(GameTable::Player pl) {
+        if( upcard.at(pl).size() < 4 ) {
+            upcard.at(pl).insert(stock.at(pl).safePop());
+        }
+    }
 
     private:
-        std::unordered_map<GameTable::Player, strStack> stock;
-        std::unordered_map<GameTable::Player, strSet> upcard;
-        std::unordered_map<GameTable::Player, strStack> pile;
+        std::unordered_map<GameTable::Player, strStack> stock{};
+        std::unordered_map<GameTable::Player, strSet> upcard{};
+        std::unordered_map<GameTable::Player, strStack> pile{};
     };
 }
