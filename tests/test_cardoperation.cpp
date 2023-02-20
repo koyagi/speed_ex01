@@ -7,6 +7,8 @@
 
 #include <nlohmann/json.hpp>
 
+using json = nlohmann::json;
+
 class CreateInitialTableFixture : public ::testing::Test {
     protected:
     GameTable table{};
@@ -23,9 +25,12 @@ TEST_F(CreateInitialTableFixture, test_initial_status) {
 }
 
 TEST_F(CreateInitialTableFixture, test_turnup_r1) {
-    using json = nlohmann::json;
     table.turnup(GameTable::Player::RED);
-    // auto redUpcard = std::vector(json::parse(table.getDebugInfo()).at("redUpcard"));
+    auto expected = std::vector{"HK"s};
     auto redUpcard = json::parse(table.getDebugInfo()).at("redUpcard").get<std::vector<std::string>>();
-    EXPECT_EQ(redUpcard[0], "HK"s);
+    EXPECT_EQ(redUpcard, expected);
+    table.turnup(GameTable::Player::RED);
+    redUpcard = json::parse(table.getDebugInfo()).at("redUpcard").get<std::vector<std::string>>();
+    expected.push_back("HQ"s);
+    EXPECT_EQ(redUpcard, expected);
 }
