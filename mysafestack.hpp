@@ -50,22 +50,6 @@ namespace {
         }
     };
     template<class Container> MySafeStack(Container)->MySafeStack<typename Container::value_type, Container>;
-    // template<typename T, typename Container>
-    // auto begin(MySafeStack<T,Container> & st) -> decltype(st.begin()) {
-    //     return st.begin();
-    // }
-    // template<typename T, typename Container>
-    // auto end(MySafeStack<T,Container> & st) -> decltype(st.end()) {
-    //     return st.end();
-    // }
-    // template<typename T, typename Container>
-    // auto cbegin(const MySafeStack<T,Container> & st) -> decltype(st.cbegin()) {
-    //     return st.cbegin();
-    // }
-    // template<typename T, typename Container>
-    // auto cend(const MySafeStack<T,Container> & st) -> decltype(st.cend()) {
-    //     return st.cend();
-    // }
 
 }
 
