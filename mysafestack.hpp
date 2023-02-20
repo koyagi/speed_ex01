@@ -1,3 +1,6 @@
+#ifndef MY_MYSAFESTACK_HPP
+#define MY_MYSAFESTACK_HPP
+
 #include <deque>
 #include <stack>
 #include <stdexcept>
@@ -66,4 +69,4 @@ namespace {
 
 }
 
-
+#endif

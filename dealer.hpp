@@ -1,3 +1,6 @@
+#ifndef MY_DEALER_HPP
+#define MY_DEALER_HPP
+
 #include <algorithm>
 #include <unordered_map>
 #include <random>
@@ -111,3 +114,5 @@ namespace {
         std::unordered_map<GameTable::Player, strStack> pile{};
     };
 }
+
+#endif
