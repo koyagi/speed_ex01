@@ -26,6 +26,7 @@ target_precompile_headers(hello PRIVATE
   <tuple>
   <vector>
   <nlohmann/json.hpp>
+  <gtest/gtest.h>
 )
 
 find_package(GTest)
