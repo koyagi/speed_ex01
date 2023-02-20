@@ -27,6 +27,7 @@ target_precompile_headers(hello PRIVATE
   <vector>
   <nlohmann/json.hpp>
   <gtest/gtest.h>
+  mysafestack.hpp
 )
 
 find_package(GTest)

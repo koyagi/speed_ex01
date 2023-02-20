@@ -1,5 +1,5 @@
 #include "../dealer.hpp"
-#include "gtest/gtest.h"
+#include <gtest/gtest.h>
 
 #include <set>
 #include <string>
