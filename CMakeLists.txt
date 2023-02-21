@@ -26,8 +26,9 @@ target_precompile_headers(hello PRIVATE
   <tuple>
   <vector>
   <nlohmann/json.hpp>
-  <gtest/gtest.h>
+  # <gtest/gtest.h> # NOTE: getst.h is not fit precompile.
   mysafestack.hpp
+  dealer.hpp
 )
 
 find_package(GTest)
@@ -38,10 +39,8 @@ foreach(test IN LISTS test_targets)
   add_executable(${test} tests/${test}.cpp)
   target_compile_features(${test} PRIVATE cxx_std_17)
   set_target_properties(${test} PROPERTIES CXX_EXTENTIONS OFF)
-  target_compile_options(${test} PRIVATE -Wall -pedantic-errors -Weffc++ -pthread)
-  # target_link_libraries(${test} GTest::GTest GTest::Main)
-  target_link_libraries(${test} GTest::Main GTest::GTest -ldl -pthread)
-  # target_link_options(${test} PRIVATE -lgtest_main -lgtest)
+  target_compile_options(${test} PRIVATE -Wall -pedantic-errors -Weffc++)
+  target_link_libraries(${test} GTest::Main GTest::GTest)
   target_precompile_headers(${test} REUSE_FROM hello)
   gtest_discover_tests(${test})
 endforeach()
