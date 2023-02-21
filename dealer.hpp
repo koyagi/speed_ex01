@@ -83,10 +83,6 @@ namespace {
             pile[GameTable::Player::RED] = recreateDataSetAs<strStack>(j.at("redSidePile"));
             pile[GameTable::Player::BLACK] = recreateDataSetAs<strStack>(j.at("blackSidePile"));
         }
-
-        auto getPrivate() {
-            return std::make_tuple(stock.at(GameTable::Player::RED), stock.at(GameTable::Player::BLACK));
-        }
         
         auto getDebugInfo() -> std::string {
             using json = nlohmann::json;

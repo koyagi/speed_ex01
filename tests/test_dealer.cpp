@@ -51,36 +51,7 @@ TEST_F(CreateDecksFixture, table_constructor_test01) {
     );
 }
 
-TEST_F(CreateDecksFixture, table_constructor_test02) {
-    auto table = GameTable{};
-    auto [stock_red, stock_black] = table.getPrivate();
-    EXPECT_NE(stock_red, MySafeStack(expected_red_deck));
-    EXPECT_NE(stock_black, MySafeStack(expected_black_deck));
-}
-
 // template<typename T> class TD; 
-
-TEST_F(CreateDecksFixture, getDebugInfo) {
-    // using json = nlohmann::json;
-
-    auto table = GameTable{};
-    std::cout << table.getDebugInfo() << std::endl;
-    // auto j = json::parse( table.getDebugInfo() );
-
-
-    // auto stock_red = j.at("redStock");
-    // auto stock_set_red = recreateDataSetAs<std::set<std::string>>(stock_red);
-    // EXPECT_EQ(stock_set_red, expected_set_red);
-
-    // auto stock_black = j.at("blackStock");
-    // auto stock_set_black = recreateDataSetAs<std::set<std::string>>(stock_black);
-    // EXPECT_EQ(stock_set_black, expected_set_black);
-
-    // EXPECT_EQ(j.at("redUpcard").size(), 0);
-    // EXPECT_EQ(j.at("blackUpcard").size(), 0);
-    // EXPECT_EQ(j.at("redSidePile").size(), 0);
-    // EXPECT_EQ(j.at("blackSidePile").size(), 0);
-}
 
 TEST(DebugInfo, setDebugInfo) {
     auto initialStatus = R"({"blackSidePile":[],"blackStock":["SA","S2","S3","S4","S5","S6","S7","S8","S9","S10","SJ","SQ","SK","CA","C2","C3","C4","C5","C6","C7","C8","C9","C10","CJ","CQ","CK"],"blackUpcard":[],"redSidePile":[],"redStock":["DA","D2","D3","D4","D5","D6","D7","D8","D9","D10","DJ","DQ","DK","HA","H2","H3","H4","H5","H6","H7","H8","H9","H10","HJ","HQ","HK"],"redUpcard":[]})"s;
