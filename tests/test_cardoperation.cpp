@@ -54,3 +54,34 @@ TEST_F(CreateInitialTableFixture, test_turnup_r1) {
     expected = std::set{"HK"s, "HQ"s, "HJ"s, "H10"s, "H9"s};
     EXPECT_NE(redUpcard, expected);
 }
+
+TEST_F(CreateInitialTableFixture, test_turnup_b1) {
+    auto expected = strSet{};
+    auto blackUpcard = strSet{};
+
+    table.turnup(GameTable::Player::BLACK);
+    expected = std::set{"CK"s};
+    blackUpcard = json::parse(table.getDebugInfo()).at("blackUpcard").get<std::set<std::string>>();
+    EXPECT_EQ(blackUpcard, expected);
+    
+    table.turnup(GameTable::Player::BLACK);
+    blackUpcard = json::parse(table.getDebugInfo()).at("blackUpcard").get<std::set<std::string>>();
+    expected = std::set{"CK"s, "CQ"s};
+    EXPECT_EQ(blackUpcard, expected);
+    
+    table.turnup(GameTable::Player::BLACK);
+    blackUpcard = json::parse(table.getDebugInfo()).at("blackUpcard").get<std::set<std::string>>();
+    expected = std::set{"CK"s, "CQ"s, "CJ"s};
+    EXPECT_EQ(blackUpcard, expected);
+    
+    table.turnup(GameTable::Player::BLACK);
+    blackUpcard = json::parse(table.getDebugInfo()).at("blackUpcard").get<std::set<std::string>>();
+    expected = std::set{"CK"s, "CQ"s, "CJ"s, "C10"s};
+    EXPECT_EQ(blackUpcard, expected);
+    
+    table.turnup(GameTable::Player::BLACK);
+    blackUpcard = json::parse(table.getDebugInfo()).at("blackUpcard").get<std::set<std::string>>();
+    EXPECT_EQ(blackUpcard, expected);
+    expected = std::set{"CK"s, "CQ"s, "CJ"s, "C10"s, "C9"s};
+    EXPECT_NE(blackUpcard, expected);
+}
