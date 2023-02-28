@@ -76,12 +76,12 @@ namespace {
             using json = nlohmann::json;
             auto j = json::parse(debug_init);
 
-            stock[GameTable::Player::RED] = recreateDataSetAs<strStack>(j.at("redStock"));
-            stock[GameTable::Player::BLACK] = recreateDataSetAs<strStack>(j.at("blackStock"));
+            stock[GameTable::Player::RED] = strStack(j.at("redStock").get<strVec>());
+            stock[GameTable::Player::BLACK] = strStack(j.at("blackStock").get<strVec>());
             upcard[GameTable::Player::RED] = recreateDataSetAs<strSet>(j.at("redUpcard"));
             upcard[GameTable::Player::BLACK] = recreateDataSetAs<strSet>(j.at("blackUpcard"));
-            pile[GameTable::Player::RED] = recreateDataSetAs<strStack>(j.at("redSidePile"));
-            pile[GameTable::Player::BLACK] = recreateDataSetAs<strStack>(j.at("blackSidePile"));
+            pile[GameTable::Player::RED] = strStack(j.at("redSidePile").get<strVec>());
+            pile[GameTable::Player::BLACK] = strStack(j.at("blackSidePile").get<strVec>());
         }
         
         auto getDebugInfo() -> std::string {
