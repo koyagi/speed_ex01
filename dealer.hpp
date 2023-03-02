@@ -20,12 +20,24 @@ namespace {
     using strStack = MySafeStack<strVec::value_type, strVec>;
     using strSet = std::set<std::string>;
 
-    template <typename T, typename S>
-    auto recreateDataSetAs(const S & src) -> T {
+    // template <typename T, typename S>
+    // auto repackAs(const S & src) -> T {
+    //     using std::begin;
+    //     using std::end;
+    //     return T(begin(src), end(src));
+    // }
+    template<typename T, typename S>
+    auto repackAs(const S & org) -> decltype(auto) {
+        static_assert(std::is_same<typename T::value_type, typename S::value_type>::value, "recreateDataSetAs(): Type mismach.");
         using std::begin;
         using std::end;
-        return T(begin(src), end(src));
+        return T(begin(org), end(org));
     }
+    template<template<typename ...> typename TCont, typename S>    // type over-load to accept just container name for various containers.
+    auto repackAs(const S & org) -> decltype(auto) {
+        return repackAs<TCont<typename S::value_type>>(org);
+    }
+
 
     auto create_half_deck(const strVec & suits) {    // Here, "const &" is better than universal-refarence.
         const auto rank = strVec{"A"s, "2"s, "3"s, "4"s, "5"s, "6"s, "7"s, "8"s, "9"s, "10"s, "J"s, "Q"s, "K"s};
@@ -78,8 +90,8 @@ namespace {
 
             stock[GameTable::Player::RED] = strStack(j.at("redStock").get<strVec>());
             stock[GameTable::Player::BLACK] = strStack(j.at("blackStock").get<strVec>());
-            upcard[GameTable::Player::RED] = recreateDataSetAs<strSet>(j.at("redUpcard"));
-            upcard[GameTable::Player::BLACK] = recreateDataSetAs<strSet>(j.at("blackUpcard"));
+            upcard[GameTable::Player::RED] = repackAs<strSet>(j.at("redUpcard").get<strVec>());
+            upcard[GameTable::Player::BLACK] = repackAs<strSet>(j.at("blackUpcard").get<strVec>());
             pile[GameTable::Player::RED] = strStack(j.at("redSidePile").get<strVec>());
             pile[GameTable::Player::BLACK] = strStack(j.at("blackSidePile").get<strVec>());
         }

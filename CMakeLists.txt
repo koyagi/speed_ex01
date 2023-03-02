@@ -28,7 +28,7 @@ target_precompile_headers(hello PRIVATE
   <nlohmann/json.hpp>
   # <gtest/gtest.h> # NOTE: getst.h is not fit precompile.
   mysafestack.hpp
-  dealer.hpp
+  # dealer.hpp
 )
 
 find_package(GTest)
