@@ -4,7 +4,8 @@
 #include <algorithm>
 #include <unordered_map>
 #include <random>
-#include <set>
+// #include <set>
+#include <unordered_set>
 #include <stack>
 #include <string>
 #include <tuple>
@@ -18,7 +19,8 @@ namespace {
     using namespace std::string_literals;
     using strVec = std::vector<std::string>;
     using strStack = MySafeStack<strVec::value_type, strVec>;
-    using strSet = std::set<std::string>;
+    // using strSet = std::set<std::string>;
+    using strSet = std::unordered_set<std::string>;
 
     // template <typename T, typename S>
     // auto repackAs(const S & src) -> T {

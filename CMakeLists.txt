@@ -10,7 +10,7 @@ enable_testing()
 add_executable(hello dealer.cpp)
 target_compile_features(hello PRIVATE cxx_std_17)
 set_target_properties(hello PROPERTIES CXX_EXTENTIONS OFF)
-target_compile_options(hello PRIVATE -Wall -Werror -pedantic-errors -Weffc++)
+target_compile_options(hello PRIVATE -Wall -Werror -Wextra -pedantic-errors -Weffc++)
 # target_precompile_headers(hello PRIVATE ${PROJECT_SOURCE_DIR}/mysafestack.hpp ${PROJECT_SOURCE_DIR}/dealer.hpp)
 target_precompile_headers(hello PRIVATE
   <deque>
@@ -18,12 +18,13 @@ target_precompile_headers(hello PRIVATE
   <stdexcept>
   <string>
   <algorithm>
-  <unordered_map>
   <random>
   <set>
   <stack>
   <string>
   <tuple>
+  <unordered_map>
+  <unordered_set>
   <vector>
   <nlohmann/json.hpp>
   # <gtest/gtest.h> # NOTE: getst.h is not fit precompile.
